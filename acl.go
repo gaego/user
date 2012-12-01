@@ -7,7 +7,7 @@ package user
 import (
 	"appengine"
 	"appengine/datastore"
-	"github.com/scotch/aego/v1/acl"
+	"github.com/gaego/acl"
 )
 
 // Can check if the user has permission to perform the action.

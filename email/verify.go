@@ -1,4 +1,4 @@
-// Copyright 2012 AEGo Authors. All rights reserved.
+// Copyright 2012 GAEGo Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,10 +7,10 @@ package email
 import (
 	"appengine/delay"
 	"fmt"
-	"github.com/scotch/aego/v1/config"
-	"github.com/scotch/aego/v1/context"
-	"github.com/scotch/aego/v1/mail"
-	"github.com/scotch/aego/v1/user/token"
+	"github.com/gaego/config"
+	"github.com/gaego/context"
+	"github.com/gaego/mail"
+	"github.com/gaego/user/token"
 	"net/http"
 )
 
@@ -25,8 +25,8 @@ var defaultConfig = map[string]string{
 	"SiteURL":          "http://localhost:8080",
 	"SenderAddress":    "Company Name <noreply@example.com>",
 	"Subject":          "Please verify your email '%s'",
-	"BodyTmplPath":     "github.com/scotch/aego/v1/user/email/templates/confirm.txt",
-	"BodyHTMLTmplPath": "github.com/scotch/aego/v1/user/email/templates/confirm.html",
+	"BodyTmplPath":     "github.com/gaego/user/email/templates/confirm.txt",
+	"BodyHTMLTmplPath": "github.com/gaego/user/email/templates/confirm.html",
 }
 
 func init() {

@@ -8,10 +8,10 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"errors"
-	"github.com/scotch/aego/v1/context"
-	"github.com/scotch/aego/v1/ds"
-	"github.com/scotch/aego/v1/user/email"
-	"github.com/scotch/aego/v1/session"
+	"github.com/gaego/context"
+	"github.com/gaego/ds"
+	"github.com/gaego/user/email"
+	"github.com/gaego/session"
 	"net/http"
 )
 

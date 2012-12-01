@@ -8,8 +8,8 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"encoding/json"
-	"github.com/scotch/aego/v1/ds"
-	"github.com/scotch/aego/v1/person"
+	"github.com/gaego/ds"
+	"github.com/gaego/person"
 	"time"
 )
 

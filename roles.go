@@ -7,7 +7,7 @@ package user
 import (
 	"appengine"
 	"errors"
-	"github.com/scotch/aego/v1/session"
+	"github.com/gaego/session"
 	"net/http"
 )
 

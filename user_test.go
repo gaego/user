@@ -6,8 +6,8 @@ package user
 
 import (
 	"appengine/datastore"
-	"github.com/scotch/aego/v1/context"
-	//"github.com/scotch/aego/v1/ds"
+	"github.com/gaego/context"
+	//"github.com/gaego/ds"
 	"testing"
 )
 

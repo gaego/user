@@ -28,6 +28,7 @@ func AdminRequired(fn http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if !CurrentUserHasRole(w, r, "admin") {
 			http.Redirect(w, r, LoginURL, http.StatusFound)
+			return
 		}
 		fn(w, r)
 	}

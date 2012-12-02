@@ -5,13 +5,12 @@
 package user
 
 import (
-	"appengine"
 	"appengine/datastore"
 	"errors"
 	"github.com/gaego/context"
 	"github.com/gaego/ds"
-	"github.com/gaego/user/email"
 	"github.com/gaego/session"
+	"github.com/gaego/user/email"
 	"net/http"
 )
 
@@ -21,7 +20,15 @@ var (
 
 // CurrentUserID returns the userId of the requesting user.
 func CurrentUserID(r *http.Request) (string, error) {
-	s, err := session.Store.Get(r, "user")
+	c := context.NewContext(r)
+	store, err := session.GetStore(c)
+	if err != nil {
+		c.Criticalf("user: There was an error retrieving the session store Error: %v", err)
+	}
+	s, err := store.Get(r, "user")
+	if err != nil {
+		c.Criticalf("user: There was an error retrieving the session Error: %v", err)
+	}
 	if err != nil {
 		return "", err
 	}
@@ -51,9 +58,13 @@ func CurrentUserIDByEmail(r *http.Request, emailAddress string) (string, error) 
 
 // CurrentUserSetID adds the provided userId to the current users session/cookie
 func CurrentUserSetID(w http.ResponseWriter, r *http.Request, userId string) error {
-	s, err := session.Store.Get(r, "user")
+	c := context.NewContext(r)
+	store, err := session.GetStore(c)
 	if err != nil {
-		c := appengine.NewContext(r)
+		c.Criticalf("user: There was an error retrieving the session store Error: %v", err)
+	}
+	s, err := store.Get(r, "user")
+	if err != nil {
 		c.Criticalf("user: There was an error retrieving the session Error: %v", err)
 		return err
 	}

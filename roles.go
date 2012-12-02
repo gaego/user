@@ -5,8 +5,8 @@
 package user
 
 import (
-	"appengine"
 	"errors"
+	"github.com/gaego/context"
 	"github.com/gaego/session"
 	"net/http"
 )
@@ -43,10 +43,15 @@ func CurrentUserHasRole(w http.ResponseWriter, r *http.Request, role string) boo
 	if id, err := CurrentUserID(r); id != "" || err != nil {
 		return false
 	}
-	// 1st Check the session.
-	s, err := session.Store.Get(r, "user|roles")
+	c := context.NewContext(r)
+	store, err := session.GetStore(c)
 	if err != nil {
-		c := appengine.NewContext(r)
+		c.Criticalf("user: There was an error retrieving the session store Error: %v", err)
+		return false
+	}
+	// 1st Check the session.
+	s, err := store.Get(r, "user|roles")
+	if err != nil {
 		c.Criticalf("user: There was an error retrieving the session Error: %v", err)
 		return false
 	}
@@ -73,9 +78,14 @@ func CurrentUserHasRole(w http.ResponseWriter, r *http.Request, role string) boo
 func CurrentUserSetRole(w http.ResponseWriter, r *http.Request, role string,
 	value bool) (err error) {
 
-	s, err := session.Store.Get(r, "user")
+	c := context.NewContext(r)
+	store, err := session.GetStore(c)
 	if err != nil {
-		c := appengine.NewContext(r)
+		c.Criticalf("user: There was an error retrieving the session store Error: %v", err)
+		return
+	}
+	s, err := store.Get(r, "user")
+	if err != nil {
 		c.Criticalf("user: There was an error retrieving the session Error: %v", err)
 		return
 	}

@@ -1,4 +1,4 @@
-// Copyright 2012 The AEGo Authors. All rights reserved.
+// Copyright 2012 The GAEGo Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,16 +8,15 @@ import (
 	"net/http"
 )
 
-var config = map[string]string{
-	"login_url": "/-/auth/login",
-}
+var LoginURL = "/login"
 
 // LoginRequired is a wrapper for http.HandleFunc. If the requesting
 // User is not logged in, they will be redirect to the login page.
 func LoginRequired(fn http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if id, _ := CurrentUserID(r); id == "" {
-			http.Redirect(w, r, config["login_url"], http.StatusForbidden)
+			http.Redirect(w, r, LoginURL, http.StatusFound)
+			return
 		}
 		fn(w, r)
 	}
@@ -28,7 +27,7 @@ func LoginRequired(fn http.HandlerFunc) http.HandlerFunc {
 func AdminRequired(fn http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if !CurrentUserHasRole(w, r, "admin") {
-			http.Redirect(w, r, config["login_url"], http.StatusForbidden)
+			http.Redirect(w, r, LoginURL, http.StatusFound)
 		}
 		fn(w, r)
 	}

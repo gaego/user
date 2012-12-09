@@ -51,7 +51,7 @@ const (
 )
 
 type Email struct {
-	Key     *datastore.Key `datastore:"-",json:"-"`
+	Key     *datastore.Key `datastore:"-" json:"-"`
 	Address string         `json:"address"`
 	UserID  string         `json:"-"`
 	Status  int64          `json:"status"`
